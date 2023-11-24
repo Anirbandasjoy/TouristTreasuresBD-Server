@@ -23,7 +23,18 @@ const getAllPackages = async (req, res, next) => {
   }
 };
 
+const getSiglePackage = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const package = await Package.findOne({ _id: id });
+    res.status(200).send(package);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createPackage,
   getAllPackages,
+  getSiglePackage,
 };
