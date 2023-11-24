@@ -1,7 +1,11 @@
-const { createPackage } = require("../controller/packageController");
+const {
+  createPackage,
+  getAllPackages,
+} = require("../controller/packageController");
 
 const packageRouter = require("express").Router();
 
-packageRouter.post("/packages", createPackage);
+packageRouter.post("/package", createPackage);
+packageRouter.get("/packages", getAllPackages);
 
 module.exports = packageRouter;

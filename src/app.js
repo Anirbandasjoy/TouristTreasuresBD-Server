@@ -3,6 +3,13 @@ const app = express();
 const createError = require("http-errors");
 const userRouter = require("./routes/userRoutes");
 const packageRouter = require("./routes/packageRoutes");
+const cors = require("cors");
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/v1", userRouter);

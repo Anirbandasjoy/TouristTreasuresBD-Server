@@ -4,7 +4,20 @@ const createPackage = async (req, res, next) => {
   try {
     const packagesData = req.body;
     const result = await Package.create(packagesData);
-    res.status(200).send(result);
+    if (result) {
+      return res
+        .status(200)
+        .send({ message: "Package Created Successfully", status: 201 });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAllPackages = async (req, res, next) => {
+  try {
+    const packages = await Package.find();
+    res.status(200).send(packages);
   } catch (error) {
     next(error);
   }
@@ -12,4 +25,5 @@ const createPackage = async (req, res, next) => {
 
 module.exports = {
   createPackage,
+  getAllPackages,
 };
