@@ -4,6 +4,7 @@ const createError = require("http-errors");
 const userRouter = require("./routes/userRoutes");
 const packageRouter = require("./routes/packageRoutes");
 const cors = require("cors");
+const wishListRouter = require("./routes/wishListRoutes");
 app.use(
   cors({
     origin: ["http://localhost:5173"],
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/v1", userRouter);
 app.use("/api/v1", packageRouter);
+app.use("/api/v1", wishListRouter);
 app.get("/", (req, res) => {
   res.send("Assignment-12 Server is Running ....");
 });
