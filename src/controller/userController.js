@@ -49,6 +49,32 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+const getGuide = async (req, res, next) => {
+  try {
+    const role = req.params.role;
+    const users = await User.find({ role: role });
+    if (!users || users.length === 0) {
+      return res.status(404).send({ message: "User Not Found", code: 404 });
+    }
+    res.status(200).send(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getSingleUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      return res.status(404).send({ message: "User Not Found", code: 404 });
+    }
+    res.status(200).send(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getRoll = async (req, res, next) => {
   try {
     const email = req.params.email;
@@ -67,4 +93,6 @@ module.exports = {
   getAllUsers,
   createUser,
   getRoll,
+  getGuide,
+  getSingleUser,
 };
