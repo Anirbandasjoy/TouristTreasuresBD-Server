@@ -3,14 +3,10 @@ const Wishlist = require("../model/WishListModel");
 const createWishData = async (req, res, next) => {
   try {
     const wishlistData = req.body;
-    const exsist = await Wishlist.find({ email: wishlistData.email });
-    if (exsist) {
-      return res.send("Already Added ");
-    }
     const result = await Wishlist.create(wishlistData);
     if (result) {
       return res
-        .status(200)
+        .status(201)
         .send({ message: "Wishlist Data Added Successfully", status: 201 });
     }
   } catch (error) {
@@ -18,6 +14,21 @@ const createWishData = async (req, res, next) => {
   }
 };
 
+const getWishlistData = async (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const wishlist = await Wishlist.find({ email: email });
+
+    if (!wishlist || wishlist.length === 0) {
+      return res.status(404).send({ message: "Wishlist data not found" });
+    }
+    res.status(200).send(wishlist);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createWishData,
+  getWishlistData,
 };
