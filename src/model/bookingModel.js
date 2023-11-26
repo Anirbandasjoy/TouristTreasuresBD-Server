@@ -25,6 +25,18 @@ const bookingSchema = new Schema({
     type: Date,
     required: true,
   },
+  tripTitle: {
+    type: String,
+    required: true,
+  },
+  tourImage: {
+    type: String,
+    required: true,
+  },
+  tourType: {
+    type: String,
+    required: true,
+  },
 });
 
 const Booking = model("Booking", bookingSchema);

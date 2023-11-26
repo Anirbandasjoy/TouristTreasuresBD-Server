@@ -1,7 +1,11 @@
-const { createBooking } = require("../controller/bookingController");
+const {
+  createBooking,
+  getBookingByTourist,
+} = require("../controller/bookingController");
 
 const bookingRoutes = require("express").Router();
 
-bookingRoutes.get("/create-booking", createBooking);
+bookingRoutes.post("/create-booking", createBooking);
+bookingRoutes.get("/get-bookingDataByTourist", getBookingByTourist);
 
 module.exports = bookingRoutes;
