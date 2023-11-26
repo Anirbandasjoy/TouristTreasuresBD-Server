@@ -39,7 +39,8 @@ const createUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({ role: { $ne: "Admin" } });
+    // { role: { $ne: "Admin" } }
+    const users = await User.find();
     if (!users) {
       return res.status(404).send({ message: "User not found ", code: 404 });
     }
@@ -89,10 +90,29 @@ const getRoll = async (req, res, next) => {
   }
 };
 
+const updateRole = async (req, res, next) => {
+  const id = req.params.id;
+  const role = req.query.role;
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { role: role },
+      { upsert: true, new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   createUser,
   getRoll,
   getGuide,
   getSingleUser,
+  updateRole,
 };
