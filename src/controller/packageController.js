@@ -45,9 +45,26 @@ const deletePackage = async (req, res, next) => {
   }
 };
 
+const getToutTypesData = async (req, res, next) => {
+  try {
+    const tourType = req.query.tourType;
+    const packages = await Package.find({ tourType: tourType });
+
+    if (!packages || packages.length === 0) {
+      return res.status(404).send([]);
+    }
+
+    return res.status(200).send(packages);
+  } catch (error) {
+    console.error("Error in getToutTypesData:", error);
+    next(error);
+  }
+};
+
 module.exports = {
   createPackage,
   getAllPackages,
   getSiglePackage,
   deletePackage,
+  getToutTypesData,
 };

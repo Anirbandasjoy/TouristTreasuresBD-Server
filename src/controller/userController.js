@@ -102,7 +102,7 @@ const updateRole = async (req, res, next) => {
     if (!updatedUser) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.status(200).json(updatedUser);
+    res.status(200).json({ message: "updated Successfully", code: 200 });
   } catch (error) {
     next(error);
   }
