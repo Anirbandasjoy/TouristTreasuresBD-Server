@@ -2,11 +2,13 @@ const {
   createPackage,
   getAllPackages,
   getSiglePackage,
+  deletePackage,
 } = require("../controller/packageController");
 
 const packageRouter = require("express").Router();
 
 packageRouter.post("/package", createPackage);
+packageRouter.delete("/package/:id", deletePackage);
 packageRouter.get("/packages", getAllPackages);
 packageRouter.get("/package/:id", getSiglePackage);
 module.exports = packageRouter;

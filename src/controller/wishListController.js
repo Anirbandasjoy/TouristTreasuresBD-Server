@@ -28,7 +28,20 @@ const getWishlistData = async (req, res, next) => {
   }
 };
 
+const deleteWishlistData = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedData = await Wishlist.deleteOne({ _id: id });
+    if (deletedData) {
+      return res.status(201).send(deletedData);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createWishData,
   getWishlistData,
+  deleteWishlistData,
 };

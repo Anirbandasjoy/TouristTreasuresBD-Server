@@ -33,8 +33,21 @@ const getSiglePackage = async (req, res, next) => {
   }
 };
 
+const deletePackage = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedData = await Package.deleteOne({ _id: id });
+    if (deletedData) {
+      return res.status(201).send(deletedData);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createPackage,
   getAllPackages,
   getSiglePackage,
+  deletePackage,
 };
