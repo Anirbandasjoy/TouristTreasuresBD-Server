@@ -33,6 +33,21 @@ const getBookingByTourist = async (req, res, next) => {
     next(error);
   }
 };
+const getBookingByGuide = async (req, res, next) => {
+  try {
+    const email = req.query.email;
+    const bookings = await Booking.find({ guideEmail: email });
+    if (!bookings || bookings.length === 0) {
+      return res.status(404).send({
+        message: "No bookings found for the specified Guide email",
+        code: 404,
+      });
+    }
+    return res.status(200).send(bookings);
+  } catch (error) {
+    next(error);
+  }
+};
 
 const deleteBooking = async (req, res, next) => {
   try {
@@ -47,8 +62,45 @@ const deleteBooking = async (req, res, next) => {
   }
 };
 
+const getBookingStatus = async (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const booking = await Booking.findOne({ touristEmail: email });
+    if (!booking) {
+      return res
+        .status(404)
+        .send({ message: "Booking Not Found With this email", code: 404 });
+    }
+    const status = booking?.status;
+    res.status(200).send(status);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateStatus = async (req, res, next) => {
+  const id = req.params.id;
+  const status = req.query.status;
+  try {
+    const updatedStatus = await Booking.findOneAndUpdate(
+      { _id: id },
+      { status: status },
+      { upsert: true, new: true }
+    );
+    if (!updatedStatus) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+    res.status(200).json({ message: "updated Successfully", code: 200 });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createBooking,
   getBookingByTourist,
   deleteBooking,
+  getBookingStatus,
+  getBookingByGuide,
+  updateStatus,
 };
