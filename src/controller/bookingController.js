@@ -23,14 +23,12 @@ const getBookingByTourist = async (req, res, next) => {
     const email = req.query.email;
     const bookings = await Booking.find({ touristEmail: email });
     if (!bookings || bookings.length === 0) {
-      return res.status(404).json({
+      return res.status(404).send({
         message: "No bookings found for the specified tourist email",
         code: 404,
       });
     }
-    return res
-      .status(200)
-      .json({ message: "Bookings found successfully", bookings });
+    return res.status(200).send(bookings);
   } catch (error) {
     next(error);
   }

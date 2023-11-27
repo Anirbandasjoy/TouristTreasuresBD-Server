@@ -37,6 +37,10 @@ const bookingSchema = new Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+  },
 });
 
 const Booking = model("Booking", bookingSchema);
