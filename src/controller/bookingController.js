@@ -80,6 +80,7 @@ const getBookingStatus = async (req, res, next) => {
 
 const updateStatus = async (req, res, next) => {
   const id = req.params.id;
+  console.log(id);
   const status = req.query.status;
   try {
     const updatedStatus = await Booking.findOneAndUpdate(
