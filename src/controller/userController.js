@@ -108,6 +108,19 @@ const updateRole = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findOneAndDelete({ _id: id });
+    if (!user) {
+      return res.status(404).send({ message: "User not found", code: 404 });
+    }
+    res.status(200).send({ message: "Deleted successfully", code: 200 });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   createUser,
@@ -115,4 +128,5 @@ module.exports = {
   getGuide,
   getSingleUser,
   updateRole,
+  deleteUser,
 };
