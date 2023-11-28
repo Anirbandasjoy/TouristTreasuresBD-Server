@@ -38,8 +38,22 @@ const getSingleStory = async (req, res, next) => {
   }
 };
 
+const deleteStory = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const story = await Story.deleteOne({ _id: id });
+    if (!story) {
+      return res.status(404).send({ message: "Story Not Found With This Id" });
+    }
+    res.status(200).send({ message: "Delete Story Successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createStory,
   getStory,
   getSingleStory,
+  deleteStory,
 };
