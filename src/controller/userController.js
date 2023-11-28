@@ -40,6 +40,7 @@ const createUser = async (req, res, next) => {
 const getAllUsers = async (req, res, next) => {
   try {
     // { role: { $ne: "Admin" } }
+    console.log(req.user.email);
     const users = await User.find();
     if (!users) {
       return res.status(404).send({ message: "User not found ", code: 404 });

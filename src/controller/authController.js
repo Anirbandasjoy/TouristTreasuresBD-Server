@@ -13,6 +13,7 @@ const createJwt = async (req, res, next) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .send({ success: true });
   } catch (error) {
@@ -24,6 +25,7 @@ const logOut = async (req, res, next) => {
   try {
     res
       .clearCookie("token", {
+        httpOnly: true,
         maxAge: 0,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",

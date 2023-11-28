@@ -21,6 +21,9 @@ const createBooking = async (req, res, next) => {
 const getBookingByTourist = async (req, res, next) => {
   try {
     const email = req.query.email;
+    if (email !== req.user.email) {
+      return res.status(401).send({ message: "unauthorized access" });
+    }
     const bookings = await Booking.find({ touristEmail: email });
     if (!bookings || bookings.length === 0) {
       return res.status(404).send({
@@ -36,6 +39,9 @@ const getBookingByTourist = async (req, res, next) => {
 const getBookingByGuide = async (req, res, next) => {
   try {
     const email = req.query.email;
+    if (email !== req.user.email) {
+      return res.status(401).send({ message: "unauthorized access" });
+    }
     const bookings = await Booking.find({ guideEmail: email });
     if (!bookings || bookings.length === 0) {
       return res.status(404).send({

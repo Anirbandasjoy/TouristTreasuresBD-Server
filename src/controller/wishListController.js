@@ -17,6 +17,9 @@ const createWishData = async (req, res, next) => {
 const getWishlistData = async (req, res, next) => {
   try {
     const email = req.params.email;
+    if (email !== req.user.email) {
+      return res.status(401).send({ message: "unauthorized access" });
+    }
     const wishlist = await Wishlist.find({ email: email });
 
     if (!wishlist || wishlist.length === 0) {
