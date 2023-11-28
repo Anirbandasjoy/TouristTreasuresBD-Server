@@ -13,6 +13,10 @@ const storySchema = new Schema({
     type: String,
     required: true,
   },
+  sportName: {
+    type: String,
+    required: true,
+  },
   story: {
     type: String,
     required: true,

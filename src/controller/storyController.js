@@ -25,7 +25,21 @@ const getStory = async (req, res, next) => {
   }
 };
 
+const getSingleStory = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const story = await Story.findOne({ _id: id });
+    if (!story) {
+      return res.status(404).send({ message: "Story Not Found With This Id" });
+    }
+    res.status(200).send(story);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createStory,
   getStory,
+  getSingleStory,
 };

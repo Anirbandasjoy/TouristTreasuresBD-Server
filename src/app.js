@@ -13,7 +13,7 @@ const storyRouter = require("./routes/StoryRoutes");
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://assignment12-848ad.web.app"],
     credentials: true,
   })
 );
