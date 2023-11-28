@@ -3,6 +3,7 @@ const Package = require("../model/packageModel");
 const createPackage = async (req, res, next) => {
   try {
     const packagesData = req.body;
+    console.log(packagesData);
     const result = await Package.create(packagesData);
     if (result) {
       return res

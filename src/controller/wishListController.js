@@ -31,6 +31,23 @@ const getWishlistData = async (req, res, next) => {
   }
 };
 
+const getSingleWishlistData = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const result = await Wishlist.findOne({ _id: id });
+
+    if (!result) {
+      return res
+        .status(404)
+        .send({ message: "Wishlist data not found with this id" });
+    }
+
+    res.status(200).send(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteWishlistData = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -47,4 +64,5 @@ module.exports = {
   createWishData,
   getWishlistData,
   deleteWishlistData,
+  getSingleWishlistData,
 };
