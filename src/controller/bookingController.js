@@ -103,6 +103,25 @@ const updateStatus = async (req, res, next) => {
   }
 };
 
+const updatePaymentStatus = async (req, res, next) => {
+  const id = req.params.id;
+  console.log(id);
+  const paymentStatus = req.query.paymentStatus;
+  try {
+    const updatedStatus = await Booking.findOneAndUpdate(
+      { _id: id },
+      { paymentStatus: paymentStatus },
+      { upsert: true, new: true }
+    );
+    if (!updatedStatus) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+    res.status(200).json({ message: "updated Successfully", code: 200 });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createBooking,
   getBookingByTourist,
@@ -110,4 +129,5 @@ module.exports = {
   getBookingStatus,
   getBookingByGuide,
   updateStatus,
+  updatePaymentStatus,
 };
